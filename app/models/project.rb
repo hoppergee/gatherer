@@ -2,6 +2,8 @@ class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
   validates :name, presence: true
 
+  include Sizeable
+
   def self.velocity_length_in_days
     21
   end
@@ -14,7 +16,7 @@ class Project < ApplicationRecord
     tasks.all?(&:complete?)
   end
 
-  def total_size
+  def size
     tasks.sum(&:size)
   end
 
