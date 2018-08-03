@@ -1,11 +1,16 @@
 class Project < ApplicationRecord
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, -> { order(project_order: :asc) }, dependent: :destroy
   validates :name, presence: true
 
   include Sizeable
 
   def self.velocity_length_in_days
     21
+  end
+
+  def next_task_order
+    return 1 if tasks.empty?
+    (tasks.last.project_order || tasks.size) + 1
   end
 
   def incomplete_tasks
