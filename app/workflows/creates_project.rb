@@ -8,7 +8,7 @@ class CreatesProject
   end
 
   def build
-    self.project = Project.new(name: name)
+    self.project = Project.create(name: name)
     project.tasks = convert_string_to_tasks
     project
   end
